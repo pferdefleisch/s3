@@ -146,7 +146,7 @@ module S3
     end
 
     def list_bucket(params = {})
-      response = bucket_request(:get, :params => params)
+      response = bucket_request(:get, params)
       max_keys = params[:max_keys]
       objects_attributes = parse_list_bucket_result(response.body)
 
@@ -160,7 +160,7 @@ module S3
           next_request_options[:max_keys] = max_keys - objects_attributes.length
         end
 
-        response = bucket_request(:get, :params => params.merge(next_request_options))
+        response = bucket_request(:get, params.merge(next_request_options))
         objects_attributes += parse_list_bucket_result(response.body)
       end
 
